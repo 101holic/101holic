@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0.beta1'
 
 gem 'pg'
+gem 'devise', git: 'git://github.com/plataformatec/devise.git', branch: 'rails4'
 
 # Gems used only for assets and not required
 # in production environments by default.
