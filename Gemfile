@@ -5,6 +5,10 @@ gem 'rails', '4.0.0.beta1'
 
 gem 'pg'
 gem 'devise', git: 'git://github.com/plataformatec/devise.git', branch: 'rails4'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'simple_enum'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -35,5 +39,7 @@ gem 'jbuilder', '~> 1.0.1'
 # Deploy with Capistrano
 # gem 'capistrano', group: :development
 
-# To use debugger
-# gem 'debugger'
+group :test, :development do
+	gem 'annotate'
+	gem 'debugger', :require => 'debugger'
+end

@@ -8,13 +8,16 @@
 </head>
 <body>
 <% if user_signed_in? %>
-	<%= content_tag :span, "logged as #{current_user.email}"%> | 
-	<%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
+	<%= content_tag :span, "logged as #{current_user.email}"%>
+	<% User.omniauth_providers.each do |provider| %>
+	  | <%= link_to "Connect #{provider.to_s.titleize}", omniauth_authorize_path(:user, provider) unless current_user.is_connected_to_provider?(provider) %>
+	<% end %>
+	| <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
 <% else %>
 	<%= link_to "Sign in", new_user_session_path %> | <%= link_to "Sign up", new_user_registration_path %>
-	<%# User.omniauth_providers.each do |provider| %>
-	  <%#= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %>
-	<%# end %>
+	<% User.omniauth_providers.each do |provider| %>
+	  | <%= link_to "Sign up with #{provider.to_s.titleize}", omniauth_authorize_path(:user, provider) %>
+	<% end %>
 <% end %>
 
 <%= yield %>

@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130428215620) do
+ActiveRecord::Schema.define(version: 20130501165845) do
+
+  create_table "authentications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "provider_cd"
+    t.string   "uid"
+    t.string   "token"
+    t.datetime "token_expires_at"
+    t.string   "secret"
+    t.string   "username"
+    t.string   "profile_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id"
 
   create_table "lessons", force: true do |t|
     t.string   "name"
