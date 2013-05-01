@@ -2,6 +2,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     oauthorize :facebook
   end
+  
+  def twitter
+    oauthorize :twitter
+  end
 
 private
 

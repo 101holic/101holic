@@ -25,8 +25,12 @@ class User < ActiveRecord::Base
          
   has_many :authentications, inverse_of: :user, dependent: :destroy
   
+  def email_required?
+    super && !is_connected_to_provider?(:twitter)
+  end
+  
   def password_required?
-    (authentications.empty? || !password.blank?) && super
+    super && (authentications.empty? || !password.blank?)
   end
 
   def self.new_with_session(params, session)
@@ -44,7 +48,12 @@ class User < ActiveRecord::Base
   end
   
   def is_connected_to_provider?(provider)
-    self.authentications.find_by_provider_cd(Authentication.send(provider)).present?
+    #self.authentications.find_by_provider_cd(Authentication.send(provider)).present?
+    # do not use find because it does not work with a user being created with a new auth record.
+    self.authentications.each do |auth|
+      return true if auth.provider == provider
+    end
+    false
   end
 
 end
